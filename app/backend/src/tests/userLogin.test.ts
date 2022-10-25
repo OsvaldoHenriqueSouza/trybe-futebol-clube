@@ -13,7 +13,10 @@ describe('Testa as possibilidades da rota "/login"', () => {
   describe('Verifica falha no login', () => {
     it('O retorno deve ser "400" quando o campo "email" não é passado', async () => {
       const response = await chai.request(app).post('/login')
-      .send({ password: 'secret_admin', });
+      .send({
+        email: '',
+        password: 'secret_admin'
+      });
       expect(response.status).to.be.equal(400);
       expect(response.body).to.deep.equal({ message: 'All fields must be filled' });
     });
