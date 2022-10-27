@@ -4,13 +4,13 @@ import UserService from '../services/UserServices';
 class UserController {
   constructor(private userService = new UserService()) { }
 
-  async loginUser(req: Request, res: Response) {
+  async loginUser(req: Request, res: Response): Promise<Response> {
     const { email, password } = req.body;
     const token = await this.userService.loginUser({ email, password });
     if (token !== 'Not found') {
       return res.status(200).json({ token });
     }
-    res.status(401).json({ message: 'Incorrect email or password' });
+    return res.status(401).json({ message: 'Incorrect email or password' });
   }
 
   verify = (req: Request, res: Response) => {

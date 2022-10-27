@@ -1,6 +1,6 @@
 // import ErrorStatus from '../helpers/errorStatus';
 import { compare } from 'bcryptjs';
-import generatorJWT from '../helpers/generatorJWT';
+import generateToken from '../helpers/generatorJWT';
 import UserModel from '../database/models/UserModel';
 import IUser from '../interfaces/IUser';
 
@@ -17,7 +17,7 @@ class UserService {
     if (!validatePassword) {
       return 'Not found';
     }
-    const token = generatorJWT.generateToken(userExists.id, userExists.role);
+    const token = generateToken(userExists.id, userExists.role);
     return token;
   }
 }
