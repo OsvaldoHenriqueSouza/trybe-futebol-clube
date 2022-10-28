@@ -4,18 +4,23 @@ import UserService from '../services/UserServices';
 class UserController {
   constructor(private userService = new UserService()) { }
 
-  async loginUser(req: Request, res: Response): Promise<Response> {
+  public loginUser = async (req: Request, res: Response) => {
     const { email, password } = req.body;
     const token = await this.userService.loginUser({ email, password });
     if (token !== 'Not found') {
       return res.status(200).json({ token });
     }
     return res.status(401).json({ message: 'Incorrect email or password' });
-  }
+  };
 
-  verify = (req: Request, res: Response) => {
-    const { user } = req.body;
-    return res.status(200).json({ role: user.role });
+  public loginVerify = async (req: Request, res: Response) => {
+    const { payload: { data: { email } } } = req.body;
+    try {
+      const userRole = await this.userService.loginVerify(email);
+      return res.status(200).json({ userRole });
+    } catch (err) {
+      return res.sendStatus(404);
+    }
   };
 }
 

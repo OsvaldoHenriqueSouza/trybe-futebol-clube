@@ -7,18 +7,26 @@ import IUser from '../interfaces/IUser';
 class UserService {
   private model = UserModel;
 
-  async loginUser(user: IUser): Promise<string> {
+  public async loginUser(user: IUser): Promise<string> {
     const { email, password } = user;
     const userExists = await this.model.findOne({ where: { email } });
     if (!userExists) {
       return 'Not found';
     }
-    const validatePassword = await compare(password, userExists.password);
+    const validatePassword = await compare(password, userExists.getDataValue('password') as string);
     if (!validatePassword) {
       return 'Not found';
     }
-    const token = generateToken(userExists.id, userExists.role);
+    const token = generateToken(userExists.email);
     return token;
+  }
+
+  public async loginVerify(email: string): Promise<any> {
+    const user = await this.model.findOne({ where: { email }, raw: true });
+    if (!user) {
+      return 'Not found';
+    }
+    return user.role;
   }
 }
 

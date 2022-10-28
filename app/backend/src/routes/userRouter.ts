@@ -9,8 +9,8 @@ const userController = new UserController(userService);
 
 const router = Router();
 
-router.post('/', validateFieldLogin, (req, res) => userController.loginUser(req, res));
+router.post('/login', validateFieldLogin, (req, res) => userController.loginUser(req, res));
 
-router.get('/validate', auth, (req, res) => userController.verify(req, res));
+router.get('/login/validate', auth, (req, res) => userController.loginVerify(req, res));
 
 export default router;
