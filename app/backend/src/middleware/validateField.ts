@@ -7,7 +7,8 @@ const validateEmail = (email: string) => {
 
 const validateFieldLogin = async (req: Request, res: Response, next: NextFunction) => {
   const { email, password } = req.body;
-  if (!email || !password) {
+  const passwordLength = 6;
+  if (!email || !password || password.length < passwordLength) {
     return res.status(400).json({ message: 'All fields must be filled' });
   }
   if (!validateEmail(email)) {

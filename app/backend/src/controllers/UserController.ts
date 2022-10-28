@@ -14,13 +14,14 @@ class UserController {
   };
 
   public loginVerify = async (req: Request, res: Response) => {
-    const { payload: { data: { email } } } = req.body;
+    const { user } = req.body;
     try {
-      const userRole = await this.userService.loginVerify(email);
-      return res.status(200).json({ userRole });
+      const userRole = await this.userService.loginVerify(user.email);
+      return res.status(200).json({ role: userRole });
     } catch (err) {
       return res.sendStatus(404);
     }
+    // return res.status(200).json({ role: user.role });
   };
 }
 

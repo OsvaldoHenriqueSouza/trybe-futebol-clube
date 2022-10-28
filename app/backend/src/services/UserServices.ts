@@ -21,10 +21,10 @@ class UserService {
     return token;
   }
 
-  public async loginVerify(email: string): Promise<any> {
+  public async loginVerify(email: string): Promise<string> {
     const user = await this.model.findOne({ where: { email }, raw: true });
     if (!user) {
-      return 'Not found';
+      throw new Error('Not found');
     }
     return user.role;
   }
