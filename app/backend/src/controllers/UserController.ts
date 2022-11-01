@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import UserService from '../services/UserServices';
+import UserService from '../services/UserService';
 
 class UserController {
   constructor(private userService = new UserService()) { }
