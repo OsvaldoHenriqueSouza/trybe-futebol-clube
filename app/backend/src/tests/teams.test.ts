@@ -12,7 +12,7 @@ describe('Testa casos da rota "/teams"', () => {
   it('Verifica casos de sucesso da rota "/teams"', async () => {
     const response = await chai.request(app).get('/teams');
     expect(response.status).to.be.equal(200);
-    expect(response).to.deep.equal(allTeams);
+    expect(response.body).to.deep.equal(allTeams);
   });
   it('', async () => {
     const response = await chai.request(app).get('/teams/12');
