@@ -1,56 +1,57 @@
-// import * as sinon from 'sinon';
-// import * as chai from 'chai';
-// // @ts-ignore
-// import chaiHttp = require('chai-http');
-// import { app } from '../app';
-// import generatorJWT from '../helpers/generatorJWT';
-// import * as bcrypt from 'bcryptjs';
-// import UserModel from '../database/models/UserModel';
-// chai.use(chaiHttp);
-// const { expect } = chai;
+import * as sinon from 'sinon';
+import * as chai from 'chai';
+// @ts-ignore
+import chaiHttp = require('chai-http');
+import { app } from '../app';
+import generatorJWT from '../helpers/generatorJWT';
+import UserModel from '../database/models/UserModel';
+chai.use(chaiHttp);
+const { expect } = chai;
 
-// describe('Testa as possibilidades da rota "/login"', () => {
-//   describe('Verifica falha no login', () => {
-//     it('O retorno deve ser "400" quando o campo "email" não é passado', async () => {
-//       const response = await chai.request(app).post('/login')
-//       .send({
-//         email: '',
-//         password: 'secret_admin'
-//       });
-//       expect(response.status).to.be.equal(400);
-//       expect(response.body).to.deep.equal({ message: 'All fields must be filled' });
-//     });
-//     it('O retorno deve ser "400" quando o campo "password" não é passado', async () => {
-//       const response = await chai.request(app).post('/login')
-//       .send({ email: 'admin@admin.com', });
-//       expect(response.status).to.be.equal(400);
-//       expect(response.body).to.deep.equal({ message: 'All fields must be filled' });
-//     });
-//     it('O retorno do status ao passar um email inválido deve ser "401"', async () => {
-//       sinon.stub(UserModel, 'findOne').resolves(null);
-//       const response = await chai.request(app).post('/login')
-//       .send({
-//         email: 'admin@admin.com',
-//         password: 'secret_admin',
-//       });
-//       expect(response.status).to.be.equal(401);
-//       expect(response.body).to.deep.equal({ message: 'Incorrect email or password' });
-//       sinon.restore();
-//     });
-//     it('O retorno do status ao passar uma senha inválida deve ser "401"', async () => {
-//       sinon.stub(UserModel, 'findOne').resolves({
-//         email: 'admin@admin.com', password: 'sadgjsadhahsxas'
-//       } as any);
-//       const response = await chai.request(app).post('/login')
-//       .send({
-//         email: 'admin@admin.com',
-//         password: 'secret@_teste',
-//       });
-//       expect(response.status).to.be.equal(401);
-//       expect(response.body).to.deep.equal({ message: 'Incorrect email or password' });
-//       sinon.restore();
-//     });
-//   });
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY2NzM0MzEzMiwiZXhwIjoxNjY3OTQ3OTMyfQ.5xmL0FqBfND4GVTsZrLpUZ-uMA2YafWNOBz0qZPHTCk';
+
+
+describe('Testa as possibilidades da rota "/login"', () => {
+  describe('Verifica falha no login', () => {
+    it('O retorno deve ser "400" quando o campo "email" não é passado', async () => {
+      const response = await chai.request(app).post('/login')
+      .send({
+        email: 'asdas_asfdas',
+    });
+      expect(response.status).to.be.equal(400);
+      expect(response.body).to.deep.equal({ message: 'All fields must be filled' });
+    });
+    it('O retorno deve ser "400" quando o campo "password" não é passado', async () => {
+      const response = await chai.request(app).post('/login')
+      .send({ password: 'fsfads_dfcas', });
+      expect(response.status).to.be.equal(400);
+      expect(response.body).to.deep.equal({ message: 'All fields must be filled' });
+    });
+    it('O retorno do status ao passar um email inválido deve ser "401"', async () => {
+      sinon.stub(UserModel, 'findOne').resolves(null);
+      const response = await chai.request(app).post('/login')
+      .send({
+        email: 'admiasda_asdad',
+        password: 'asfdas_asdas',
+      });
+      expect(response.status).to.be.equal(401);
+      expect(response.body).to.deep.equal({ message: 'Incorrect email or password' });
+      sinon.restore();
+    });
+    it('O retorno do status ao passar uma senha inválida deve ser "401"', async () => {
+      sinon.stub(UserModel, 'findOne').resolves({
+        email: 'admin@admin.com', password: 'sadgjsadhahsxas'
+      } as any);
+      const response = await chai.request(app).post('/login')
+      .send({
+        email: 'asfda_asda',
+        password: 'asdasd_asdasd',
+      });
+      expect(response.status).to.be.equal(401);
+      expect(response.body).to.deep.equal({ message: 'Incorrect email or password' });
+      sinon.restore();
+    });
+  });
 //   describe('Verifica o sucesso do login', () => {
 //     beforeEach(() => {
 //       sinon.stub(UserModel, 'findOne')
@@ -113,4 +114,4 @@
 //       expect(response.body).to.deep.equal({ role: 'admin' });
 //     });
 //   });
-// });
+});
