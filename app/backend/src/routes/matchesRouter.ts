@@ -8,8 +8,8 @@ const router = Router();
 
 const matchesController = new MatchesController();
 
-router.put('/:id/finish', matchesController.updateMatch);
-router.put('/:id', matchesController.updateScote);
+router.patch('/:id/finish', matchesController.updateMatch);
+router.patch('/:id', matchesController.updateScote);
 router.get('/', matchesController.getAllMatches);
 router.post('/', auth, validateFieldTemas, validateExistsTeams, matchesController.newMatch);
 
